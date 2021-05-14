@@ -41,3 +41,37 @@ int add_end_node(stack_t **h, int n)
  * @h: pointer to head of doubly linked list
  */
 void delete_end_node(stack_t **h)
+{
+	stack_t *del = NULL;
+
+	/* account for only one node in list */
+	del = *h;
+	if ((*h)->next == NULL)
+	{
+		*h = NULL;
+		free(del);
+	}
+	else /* else delete front, and link correctly */
+	{
+		*h = (*h)->next;
+		(*h)->prev = NULL;
+		free(del);
+	}
+}
+/**
+ * free_dlist - frees a doubly linked list with only int data, no strings
+ * @h: pointer to head of list
+ */
+void free_dlist(stack_t **h)
+{
+	/* return if empty list */
+	if (!h)
+		return;
+
+	while (*h && (*h)->next)
+	{
+		*h = (*h)->next;
+		free((*h)->prev);
+	}
+	free(*h);
+}
